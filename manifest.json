@@ -1,0 +1,11 @@
+{
+  "name": "Jurnal Hidupku",
+  "short_name": "Jurnal",
+  "description": "Jurnal, diary, tracker produktivitas dan keuangan pribadi dengan AI Coach.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#111827",
+  "orientation": "portrait",
+  "icons": []
+}
