@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>Jurnal Hidupku</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div>
+    <h1>Jurnal Hidupku</h1>
+    <p>Catat hidup. Kelola uang. Bangun diri.</p>
+  </div>
+  <div class="avatar">D</div>
+</header>
+
+<main>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="page active">
+
+    <div class="greeting">
+      <p id="today"></p>
+      <h2>Bagaimana harimu hari ini?</h2>
+    </div>
+
+    <div class="card ai-card">
+      <span class="ai-icon">🤖</span>
+      <div>
+        <h3>AI Coach</h3>
+        <p id="aiMessage">
+          Jangan menunggu motivasi. Mulai dari satu hal kecil hari ini.
+        </p>
+      </div>
+    </div>
+
+    <div class="stats">
+
+      <div class="card stat">
+        <span>💰</span>
+        <small>Saldo</small>
+        <strong id="balance">Rp0</strong>
+      </div>
+
+      <div class="card stat">
+        <span>🎯</span>
+        <small>Produktivitas</small>
+        <strong id="productivity">0%</strong>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h3>Tracker Hari Ini</h3>
+
+      <label class="habit">
+        <input type="checkbox" onchange="updateHabit(this)">
+        <span>📚 Membaca</span>
+      </label>
+
+      <label class="habit">
+        <input type="checkbox" onchange="updateHabit(this)">
+        <span>💪 Olahraga</span>
+      </label>
+
+      <label class="habit">
+        <input type="checkbox" onchange="updateHabit(this)">
+        <span>💰 Tidak boros</span>
+      </label>
+
+      <label class="habit">
+        <input type="checkbox" onchange="updateHabit(this)">
+        <span>📔 Menulis jurnal</span>
+      </label>
+    </div>
+
+  </section>
+
+
+  <!-- JURNAL -->
+  <section id="journal" class="page">
+
+    <h2>📔 Jurnal Harian</h2>
+
+    <div class="card">
+
+      <label>Bagaimana perasaanmu?</label>
+
+      <div class="moods">
+        <button onclick="selectMood('😄')">😄</button>
+        <button onclick="selectMood('🙂')">🙂</button>
+        <button onclick="selectMood('😐')">😐</button>
+        <button onclick="selectMood('😔')">😔</button>
+        <button onclick="selectMood('😡')">😡</button>
+      </div>
+
+      <textarea
+        id="journalText"
+        placeholder="Apa yang terjadi hari ini?"
+      ></textarea>
+
+      <input
+        id="journalGoal"
+        placeholder="Target utama hari ini..."
+      >
+
+      <button class="primary" onclick="saveJournal()">
+        Simpan Jurnal
+      </button>
+
+    </div>
+
+    <div id="journalList"></div>
+
+  </section>
+
+
+  <!-- DIARY -->
+  <section id="diary" class="page">
+
+    <h2>📖 Diary Pribadi</h2>
+
+    <div class="card">
+
+      <input
+        id="diaryTitle"
+        placeholder="Judul diary..."
+      >
+
+      <textarea
+        id="diaryText"
+        placeholder="Tulis apa yang ingin kamu ceritakan..."
+      ></textarea>
+
+      <button class="primary" onclick="saveDiary()">
+        Simpan Diary
+      </button>
+
+    </div>
+
+    <div id="diaryList"></div>
+
+  </section>
+
+
+  <!-- KEUANGAN -->
+  <section id="finance" class="page">
+
+    <h2>💰 Keuangan</h2>
+
+    <div class="finance-summary">
+
+      <div class="card">
+        <small>Saldo</small>
+        <h2 id="financeBalance">Rp0</h2>
+      </div>
+
+      <div class="card">
+        <small>Pemasukan</small>
+        <h2 id="income">Rp0</h2>
+      </div>
+
+      <div class="card">
+        <small>Pengeluaran</small>
+        <h2 id="expense">Rp0</h2>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <select id="transactionType">
+        <option value="income">Pemasukan</option>
+        <option value="expense">Pengeluaran</option>
+      </select>
+
+      <input
+        id="transactionAmount"
+        type="number"
+        placeholder="Nominal"
+      >
+
+      <input
+        id="transactionNote"
+        placeholder="Contoh: makan, gaji, transport..."
+      >
+
+      <button class="primary" onclick="addTransaction()">
+        Tambahkan
+      </button>
+
+    </div>
+
+    <div id="transactionList"></div>
+
+  </section>
+
+
+  <!-- AI -->
+  <section id="ai" class="page">
+
+    <h2>🤖 AI Coach</h2>
+
+    <div class="card chat">
+
+      <div id="chatMessages">
+        <div class="message ai">
+          Halo! Aku AI Coach kamu. Apa yang sedang kamu pikirkan?
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input
+          id="aiInput"
+          placeholder="Tulis pesan..."
+          onkeydown="if(event.key==='Enter') sendAI()"
+        >
+
+        <button onclick="sendAI()">➤</button>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- NAVIGATION -->
+
+<nav class="bottom-nav">
+
+  <button onclick="showPage('dashboard')">
+    🏠
+    <span>Beranda</span>
+  </button>
+
+  <button onclick="showPage('journal')">
+    📔
+    <span>Jurnal</span>
+  </button>
+
+  <button onclick="showPage('diary')">
+    📖
+    <span>Diary</span>
+  </button>
+
+  <button onclick="showPage('finance')">
+    💰
+    <span>Uang</span>
+  </button>
+
+  <button onclick="showPage('ai')">
+    🤖
+    <span>AI</span>
+  </button>
+
+</nav>
+
+<script src="script.js"></script>
+
+</body>
+</html>
